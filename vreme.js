@@ -265,7 +265,7 @@
           return ampm;
         };
 
-        if (index === 0 && format.match(this.regex.ONE_DIGIT_REGEXP)) return dateTime.getHours();
+        if (index === 0 && format.match(this.regex.ONE_DIGIT_REGEXP)) if (dateTime.getHours() > 12) return dateTime.getHours() - 12;else return dateTime.getHours();
 
         if (index === 0 && format.match(this.regex.TWO_DIGIT_REGEXP)) if (fullTime[7] && dateTime.getHours() > 12) {
           return ('0' + (dateTime.getHours() - 12)).slice(-2);
