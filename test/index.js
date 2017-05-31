@@ -4,6 +4,7 @@ import Vreme from '../src/index'
 let stamp
 
 const date = new Date('Sat, 01 Aug 2015 2:10:21')
+const afternoonDate = new Date('Sat, 01 Aug 2015 14:10:21')
 
 describe('Human Readable Time format', () => {
 
@@ -57,15 +58,20 @@ describe('Human Readable Time format', () => {
 
   describe('Time conversion', () => {
 
-    it('should parse time in H:MM format', () => expect(stamp.format(date, '5:00')).to.equal('2:10'))
+    it('should parse time in H:MM format', () => expect(stamp.format(date,          '5:00')).to.equal('2:10'))
+    it('should parse time in H:MM format', () => expect(stamp.format(afternoonDate, '5:00')).to.equal('2:10'))
 
-    it('should parse time in HH:MM format', () => expect(stamp.format(date, '17:10')).to.equal('02:10'))
+    it('should parse time in HH:MM format', () => expect(stamp.format(date,          '17:10')).to.equal('02:10'))
+    it('should parse time in HH:MM format', () => expect(stamp.format(afternoonDate, '17:10')).to.equal('14:10'))
 
-    it('should parse time in H:MM:SS format', () => expect(stamp.format(date, '5:10:30')).to.equal('2:10:21'))
+    it('should parse time in H:MM:SS format', () => expect(stamp.format(date,          '5:10:30')).to.equal('2:10:21'))
+    it('should parse time in H:MM:SS format', () => expect(stamp.format(afternoonDate, '5:10:30')).to.equal('2:10:21'))
 
-    it('should parse time in HH:MM:SS format', () => expect(stamp.format(date, '15:10:30')).to.equal('02:10:21'))
+    it('should parse time in HH:MM:SS format', () => expect(stamp.format(date,          '15:10:30')).to.equal('02:10:21'))
+    it('should parse time in HH:MM:SS format', () => expect(stamp.format(afternoonDate, '15:10:30')).to.equal('14:10:21'))
 
-    it('should parse time in H:MM AM/PM format', () => expect(stamp.format(date, '5:10 pm')).to.equal('2:10 am'))
+    it('should parse time in H:MM AM/PM format', () => expect(stamp.format(date,          '5:10 pm')).to.equal('2:10 am'))
+    it('should parse time in H:MM AM/PM format', () => expect(stamp.format(afternoonDate, '5:10 pm')).to.equal('2:10 pm'))
 
     it('should parse time in HH:MM AM/PM format for hours > 12', () => expect(stamp.format(new Date('Sat, 01 Aug 2015 14:10:21'), '11:10 pm')).to.equal('02:10 pm'))
 
