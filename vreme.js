@@ -77,6 +77,7 @@
         }).join('|') + ')$', 'i'),
         ONE_DIGIT_REGEXP: /^\d{1}$/,
         TWO_DIGIT_REGEXP: /^\d{2}$/,
+        GREATER_THAN_TWELVE_REGEXP: /^(?:1[3-9])|(?:2\d)$/,
         FOUR_DIGIT_REGEXP: /^\d{4}$/,
         ORDINAL_DAY_REGEXP: /^(\d{1,2})(st|nd|rd|th)$/,
         TIME_REGEXP: /(\d{1,2})(:)(\d{2})(\s*)(:)?(\d{2})?(\s*)?([ap]m)?/i
@@ -265,13 +266,17 @@
           return ampm;
         };
 
-        if (index === 0 && format.match(this.regex.ONE_DIGIT_REGEXP)) if (dateTime.getHours() > 12) return dateTime.getHours() - 12;else return dateTime.getHours();
+        var getCivilianHours = function getCivilianHours(dateTime) {
+          var hours = dateTime.getHours();
 
-        if (index === 0 && format.match(this.regex.TWO_DIGIT_REGEXP)) if (fullTime[7] && dateTime.getHours() > 12) {
-          return ('0' + (dateTime.getHours() - 12)).slice(-2);
-        } else {
-          return ('0' + dateTime.getHours()).slice(-2);
-        }
+          if (hours === 0) return 12;else if (hours > 12) return hours - 12;else return hours;
+        };
+
+        if (index === 0 && format.match(this.regex.ONE_DIGIT_REGEXP)) return getCivilianHours(dateTime);
+
+        if (index === 0 && format.match(this.regex.GREATER_THAN_TWELVE_REGEXP)) return ('0' + dateTime.getHours()).slice(-2);
+
+        if (index === 0 && format.match(this.regex.TWO_DIGIT_REGEXP)) return ('0' + getCivilianHours(dateTime)).slice(-2);
 
         if (index === 2 && format.match(this.regex.TWO_DIGIT_REGEXP)) return ('0' + dateTime.getMinutes()).slice(-2);
 
